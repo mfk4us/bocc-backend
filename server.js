@@ -23,11 +23,13 @@ console.log("WABA_ID:", WABA_ID);
 
 const app = express();
 
-// CORS CONFIG: Allow only Vercel frontend, localhost:3000, and portal.fasamytech.com
+// CORS CONFIG: Allow only Vercel frontend, localhost:3000, portal.fasamytech.com, and additional domains
 const allowedOrigins = [
   'https://bocc-client-panel.vercel.app',
   'http://localhost:3000',
-  'https://portal.fasamytech.com'
+  'https://portal.fasamytech.com',
+  'https://varibotix.vercel.app',
+  'https://bocc-client-panel-mfk4us-projects.vercel.app'
 ];
 
 app.use(cors({
@@ -116,6 +118,11 @@ app.get('/templates', async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'Failed to fetch templates' });
   }
+});
+
+// Health check ping route
+app.get('/ping', (req, res) => {
+  res.send('OK');
 });
 
 const PORT = process.env.PORT || 3000;
