@@ -23,11 +23,22 @@ console.log("WABA_ID:", WABA_ID);
 
 const app = express();
 
-// ⚠️ TEMPORARY CORS CONFIG - Allowing all origins for debugging (RESTRICT in production)
-// TEMPORARY: Allow all origins for testing
+// CORS CONFIG: Allow only Vercel frontend, localhost:3000, and portal.fasamytech.com
+const allowedOrigins = [
+  'https://bocc-client-panel.vercel.app',
+  'http://localhost:3000',
+  'https://portal.fasamytech.com'
+];
+
 app.use(cors({
-  origin: '*',
-  credentials: false
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed from this origin'));
+    }
+  },
+  credentials: true,
 }));
 
 app.use(express.json());
