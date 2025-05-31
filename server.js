@@ -23,21 +23,11 @@ console.log("WABA_ID:", WABA_ID);
 
 const app = express();
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://bocc-client-panel.vercel.app', // <-- Add your Vercel frontend domain here
-  // Add more production domains as needed
-];
+// ⚠️ TEMPORARY CORS CONFIG - Allowing all origins for debugging (RESTRICT in production)
+// TEMPORARY: Allow all origins for testing
 app.use(cors({
-  origin: function(origin, callback){
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  credentials: true,
+  origin: '*',
+  credentials: false
 }));
 
 app.use(express.json());
